@@ -1,0 +1,67 @@
+<form [formGroup]="registrationForm" class="registration-form">
+    <div class="form-container">
+        <mat-form-field>
+            <mat-label>Tournament</mat-label>
+            <mat-select formControlName="tournamentId">
+                @for (tournament of tournamentList; track tournament) {
+                    <mat-option [value]="tournament.id">{{tournament.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <mat-grid-list cols="4" rowHeight="60px">
+            <mat-grid-tile>
+                <h2>Name:</h2>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <h2>Level:</h2>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <h2>Payment</h2>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <h2>Action:</h2>
+            </mat-grid-tile>
+            <div formArrayName="players">
+                @for (player of players.controls; track player; let i=$index) {
+                    <div [formGroupName]="i">
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <mat-label for="aPlayer-{{ i }}">Player</mat-label>
+                                <input id="aPlayer-{{ i }}" matInput placeholder="John Doe" formControlName="name">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-radio-group aria-label="Level" formControlName="level">
+                                <mat-radio-button value="A">A</mat-radio-button>
+                                <mat-radio-button value="B">B</mat-radio-button>
+                            </mat-radio-group>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-checkbox formControlName="paid">Paid?</mat-checkbox>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <div class="add-remove-container">
+                                <div class="buttons">
+                                    <button mat-mini-fab aria-label="Add Player" (click)="addPlayer()"> 
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                    <button mat-mini-fab aria-label="Delete Player" (click)="deletePlayer(i)"> 
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>                      
+                            </div>
+                        </mat-grid-tile>
+                    </div>
+                }
+            </div>
+
+        </mat-grid-list>
+        <div>
+            <button type="submit" mat-raised-button [disabled]="!registrationForm.valid" (click)="createRegistration()">Submit</button>
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>
+<hr>
+<p>Form Value: {{ registrationForm.value | json }}</p>
+<p>Form Status: {{ registrationForm.status }}</p>

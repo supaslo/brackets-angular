@@ -1,0 +1,61 @@
+<form [formGroup]="registrationListForm" class="registration-list">
+    <div class="form-container">
+      <h2>
+        Registrations
+      </h2>
+        <div>
+            <button mat-mini-fab aria-label="Create New Registration" (click)="newRegistration()"> 
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div>
+            <table mat-table [dataSource]="registrationList" class="mat-elevation-z8 demo-table">
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Tournament Name</th>
+                  <td mat-cell *matCellDef="let element">{{element.tournamentRegistered.name}}</td>
+                </ng-container>
+              
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef>Tournament Date</th>
+                  <td mat-cell *matCellDef="let element">{{formatDate(element.tournamentRegistered.date)}}</td>
+                </ng-container>
+              
+                <!-- Count Column -->
+                <ng-container matColumnDef="count">
+                  <th mat-header-cell *matHeaderCellDef>Registered Players</th>
+                  <td mat-cell *matCellDef="let element">{{element.playerCount}}</td>
+                </ng-container>
+              
+                <!-- Paid Column -->
+                <ng-container matColumnDef="paid">
+                  <th mat-header-cell *matHeaderCellDef>Paid?</th>
+                  <td mat-cell *matCellDef="let element">
+                    @if (element.everybodyPaid) {
+                      Yes
+                    } @else {
+                      No
+                    }
+                  </td>
+                </ng-container>                
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-mini-fab aria-label="Edit Registration" (click)="editRegistration(element.tournamentRegistered.id)"> 
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab aria-label="Delete Registration" (click)="deleteRegistration(element.tournamentRegistered.id)"> 
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</form>

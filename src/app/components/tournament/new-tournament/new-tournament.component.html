@@ -1,0 +1,60 @@
+<form [formGroup]="newTournamentForm" class="new-tournament-form">
+    <div class="form-container">
+        <div class="tournament-name">
+            <mat-form-field class="input">
+                <mat-label>Tournament Name</mat-label>
+                <input matInput placeholder="Ex. LOD" formControlName="tournamentName">
+            </mat-form-field>
+        </div>
+        <div class="tournament-type">
+            <mat-form-field>
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="lod">Luck of Draw</mat-option>
+                    <mat-option value="blindDraw">Blind Draw</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>        
+        <div class="tournament-venue">
+            <mat-form-field class="input">
+                <mat-label>Tournament Venue</mat-label>
+                <input matInput placeholder="Ex. Wicked Rabbit" formControlName="venue">
+            </mat-form-field>
+        </div>
+        <div class="tournament-date">
+            <mat-form-field class="input">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="tournament-city">
+            <mat-form-field class="input">
+                <mat-label>Tournament City</mat-label>
+                <input matInput placeholder="Ex. Des Moines" formControlName="city">
+            </mat-form-field>
+        </div>
+        <div class="tournament-state">
+            <mat-form-field>
+                <mat-label>Tournament State</mat-label>
+                <mat-select formControlName="state">
+                    @for (state of stateList; track state) {
+                        <mat-option [value]="state.abbreviation">{{state.abbreviation}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-grid-list cols="1" rowHeight="60px">
+
+        </mat-grid-list>
+        <div>
+            <button type="submit" mat-raised-button [disabled]="!newTournamentForm.valid" (click)="createTournament()">Submit</button>
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>
+<hr>
+<p>Form Value: {{ newTournamentForm.value | json }}</p>
+<p>Form Status: {{ newTournamentForm.status }}</p>
