@@ -1,0 +1,42 @@
+<form [formGroup]="newUserForm" class="new-user-form">
+    <div class="form-container">
+        <div class="user-id">
+            <mat-form-field class="input">
+                <mat-label>User ID</mat-label>
+                <input matInput placeholder="Ex. email" formControlName="userId">
+            </mat-form-field>
+        </div>
+        <div class="user-first-name">
+            <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="Ex. Joe" formControlName="firstName">
+            </mat-form-field>
+        </div>        
+        <div class="user-last-name">
+            <mat-form-field class="input">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Ex. Smith" formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <div class="user-role">
+            <mat-form-field class="input">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="userRole">
+                    <mat-option value="admin">Adminstrator</mat-option>
+                    <mat-option value="tournamentOwner">Tournament Owner</mat-option>
+                    <mat-option value="general">General</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-grid-list cols="1" rowHeight="60px">
+
+        </mat-grid-list>
+        <div>
+            <button type="submit" mat-raised-button [disabled]="!newUserForm.valid" (click)="createUser()">Submit</button>
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>
+<hr>
+<p>Form Value: {{ newUserForm.value | json }}</p>
+<p>Form Status: {{ newUserForm.status }}</p>
